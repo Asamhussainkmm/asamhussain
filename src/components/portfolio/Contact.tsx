@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { SectionHeading } from "./SectionHeading";
 import { useContactContent } from "@/lib/portfolio-content";
 import { submitMessage } from "@/lib/messages";
+import { sendContactEmailCopy } from "@/lib/notify";
 
 export function Contact() {
   const [sending, setSending] = useState(false);
@@ -43,15 +44,17 @@ export function Contact() {
                 e.preventDefault();
                 const form = e.currentTarget;
                 const data = new FormData(form);
-                setSending(true);
-                submitMessage({
+                const values = {
                   name: String(data.get("name") ?? ""),
                   email: String(data.get("email") ?? ""),
                   message: String(data.get("message") ?? ""),
-                })
+                };
+                setSending(true);
+                submitMessage(values)
                   .then(() => {
                     toast.success("Thanks — I'll be in touch shortly.");
                     form.reset();
+                    void sendContactEmailCopy(values);
                   })
                   .catch(() => {
                     toast.error("Something went wrong — please try again.");

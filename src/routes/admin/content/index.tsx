@@ -59,15 +59,17 @@ function AdminContent() {
         Edit the text on your site directly — no need to touch Firestore by hand.
       </p>
       <Tabs defaultValue="hero" className="mt-6">
-        <TabsList>
-          <TabsTrigger value="hero">Hero</TabsTrigger>
-          <TabsTrigger value="about">About</TabsTrigger>
-          <TabsTrigger value="projects">Projects section</TabsTrigger>
-          <TabsTrigger value="skills">Skills</TabsTrigger>
-          <TabsTrigger value="experience">Experience</TabsTrigger>
-          <TabsTrigger value="testimonials">Testimonials section</TabsTrigger>
-          <TabsTrigger value="contact">Contact</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto">
+          <TabsList>
+            <TabsTrigger value="hero">Hero</TabsTrigger>
+            <TabsTrigger value="about">About</TabsTrigger>
+            <TabsTrigger value="projects">Projects section</TabsTrigger>
+            <TabsTrigger value="skills">Skills</TabsTrigger>
+            <TabsTrigger value="experience">Experience</TabsTrigger>
+            <TabsTrigger value="testimonials">Testimonials section</TabsTrigger>
+            <TabsTrigger value="contact">Contact</TabsTrigger>
+          </TabsList>
+        </div>
         <TabsContent value="hero"><HeroForm /></TabsContent>
         <TabsContent value="about"><AboutForm /></TabsContent>
         <TabsContent value="projects"><ProjectsSectionForm /></TabsContent>

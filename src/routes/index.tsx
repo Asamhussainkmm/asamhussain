@@ -7,7 +7,9 @@ import { Experience } from "@/components/portfolio/Experience";
 import { Testimonials } from "@/components/portfolio/Testimonials";
 import { Contact } from "@/components/portfolio/Contact";
 import { PageShell } from "@/components/portfolio/PageShell";
+import { PageLoader } from "@/components/portfolio/PageLoader";
 import { SITE_URL } from "@/lib/site";
+import { useInitialLoad } from "@/lib/useInitialLoad";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,15 +20,22 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const ready = useInitialLoad();
   return (
     <PageShell>
-      <Hero />
-      <About />
-      <Projects />
-      <Skills />
-      <Experience />
-      <Testimonials />
-      <Contact />
+      {ready ? (
+        <>
+          <Hero />
+          <About />
+          <Projects />
+          <Skills />
+          <Experience />
+          <Testimonials />
+          <Contact />
+        </>
+      ) : (
+        <PageLoader />
+      )}
     </PageShell>
   );
 }

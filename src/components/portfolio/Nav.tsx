@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Menu } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import {
+  Sheet,
+  SheetContent,
+  SheetClose,
+  SheetTitle,
+} from "@/components/ui/sheet";
 
 const links = [
   { to: "/about", label: "About" },
@@ -12,6 +19,7 @@ const links = [
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -42,14 +50,49 @@ export function Nav() {
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
           <ThemeToggle />
           <Link
             to="/contact"
-            className="text-sm font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+            className="hidden sm:inline-flex text-sm font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
           >
             Hire Me
           </Link>
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <button
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
+              className="md:hidden h-9 w-9 grid place-items-center rounded-full border border-border bg-card/50 hover:border-primary hover:text-primary transition-colors"
+            >
+              <Menu className="h-4 w-4" />
+            </button>
+            <SheetContent side="right" className="w-3/4 sm:max-w-xs">
+              <SheetTitle className="mb-2">
+                asam<span className="text-primary">.</span>
+              </SheetTitle>
+              <div className="flex flex-col gap-1 text-base">
+                {links.map((l) => (
+                  <SheetClose asChild key={l.to}>
+                    <Link
+                      to={l.to}
+                      className="rounded-lg px-3 py-2.5 text-muted-foreground hover:text-foreground hover:bg-card transition-colors [&.active]:text-foreground [&.active]:bg-card"
+                      activeProps={{ className: "active" }}
+                    >
+                      {l.label}
+                    </Link>
+                  </SheetClose>
+                ))}
+              </div>
+              <SheetClose asChild>
+                <Link
+                  to="/contact"
+                  className="mt-4 inline-flex items-center justify-center text-sm font-medium px-4 py-2.5 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+                >
+                  Hire Me
+                </Link>
+              </SheetClose>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
     </header>
