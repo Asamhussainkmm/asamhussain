@@ -1,8 +1,10 @@
 import { ArrowRight, Mail } from "lucide-react";
+import { useHeroContent } from "@/lib/portfolio-content";
 
 const tokens = ["{ }", "</>", "()", "=>", "[]", "//", "0x", "λ", "&&", "??"];
 
 export function Hero() {
+  const hero = useHeroContent();
   return (
     <section
       id="top"
@@ -34,23 +36,23 @@ export function Hero() {
       <div className="mx-auto max-w-6xl px-6 w-full">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-3 py-1 text-xs text-muted-foreground mb-6">
           <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-          Available for remote senior roles
+          {hero.badge}
         </div>
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">
-          Asam Hussain
+          {hero.name}
         </h1>
         <p className="mt-4 text-lg md:text-2xl text-foreground/80 font-medium">
-          Senior Full-Stack Engineer{" "}
-          <span className="text-muted-foreground">·</span>{" "}
-          <span className="text-primary">React</span>{" "}
-          <span className="text-muted-foreground">·</span>{" "}
-          <span className="text-primary">Next.js</span>{" "}
-          <span className="text-muted-foreground">·</span>{" "}
-          <span className="text-primary">FastAPI</span>
+          {hero.roleTitle}
+          {hero.stack.map((s) => (
+            <span key={s}>
+              {" "}
+              <span className="text-muted-foreground">·</span>{" "}
+              <span className="text-primary">{s}</span>
+            </span>
+          ))}
         </p>
         <p className="mt-6 max-w-2xl text-base md:text-lg text-muted-foreground leading-relaxed">
-          I build production-grade web apps for startups. Currently open to
-          remote senior roles.
+          {hero.tagline}
         </p>
         <div className="mt-10 flex flex-wrap gap-3">
           <a

@@ -1,43 +1,14 @@
 import { SectionHeading } from "./SectionHeading";
-
-const entries = [
-  {
-    role: "Full-Stack Engineer",
-    company: "IQLand.ai",
-    period: "Jan 2024 – Present",
-    location: "Remote · USA",
-    detail: "Sole full-stack engineer building a Techstars-backed AI real estate platform end-to-end.",
-  },
-  {
-    role: "Founder & Developer",
-    company: "thelogogenerator.com",
-    period: "2024 – Present",
-    location: "Remote",
-    detail: "Designed, built, and launched an AI-powered logo SaaS as a solo founder.",
-  },
-  {
-    role: "Top Rated Freelancer",
-    company: "Upwork",
-    period: "2022 – Present",
-    location: "Remote · US & UK clients",
-    detail: "Long-term engagements with startups and agencies across full-stack, AI, and cloud.",
-  },
-  {
-    role: "Associate Software Engineer",
-    company: "Virtusa Private Limited",
-    period: "Nov 2021 – Aug 2023",
-    location: "Sri Lanka",
-    detail: "Built enterprise web applications and internal platforms for global clients.",
-  },
-];
+import { useExperienceContent } from "@/lib/portfolio-content";
 
 export function Experience() {
+  const experience = useExperienceContent();
   return (
     <section id="experience" className="py-24 md:py-32 bg-surface/40">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading eyebrow="04 / Experience" title="Where I've worked" />
+        <SectionHeading eyebrow={experience.eyebrow} title={experience.title} />
         <ol className="relative border-l border-border ml-2 space-y-10">
-          {entries.map((e) => (
+          {experience.entries.map((e) => (
             <li key={e.role + e.company} className="pl-8 relative">
               <span className="absolute -left-[7px] top-1.5 h-3 w-3 rounded-full bg-primary ring-4 ring-background" />
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">

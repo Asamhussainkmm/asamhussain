@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { themeInitScript } from "../lib/theme";
 
 function NotFoundComponent() {
   return (
@@ -84,6 +85,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Full-stack engineer (React · Next.js · FastAPI) shipping production products for startups. Open to remote senior roles." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "index, follow" },
+      { name: "theme-color", content: "#0a0a0a" },
     ],
     links: [
       {
@@ -107,6 +110,22 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en" className="dark">
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Asam Hussain",
+              jobTitle: "Senior Full-Stack Engineer",
+              description:
+                "Senior Full-Stack Engineer building production web apps with React, Next.js, and FastAPI.",
+              knowsAbout: ["React", "Next.js", "FastAPI", "TypeScript", "Firebase", "GCP"],
+              sameAs: [],
+            }),
+          }}
+        />
       </head>
       <body>
         {children}

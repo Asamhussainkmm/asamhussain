@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(git stash *)",
+      "Bash(ls -la \"/c/Users/asamh/Downloads/cashwhale-sf1-firebase-adminsdk-fbsvc-1b27a4214a.json\" 2>&1)",
+      "Read(//c/Users/asamh/Downloads/**)",
+      "Bash(GOOGLE_APPLICATION_CREDENTIALS=\"/c/Users/asamh/Downloads/cashwhale-sf1-firebase-adminsdk-fbsvc-1b27a4214a.json\" node scripts/seed-firestore.mjs)"
+    ]
+  }
+}

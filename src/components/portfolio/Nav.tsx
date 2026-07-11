@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const links = [
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Work" },
-  { href: "#skills", label: "Skills" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
+  { to: "/about", label: "About" },
+  { to: "/projects", label: "Work" },
+  { to: "/skills", label: "Skills" },
+  { to: "/experience", label: "Experience" },
+  { to: "/contact", label: "Contact" },
 ];
 
 export function Nav() {
@@ -25,26 +27,30 @@ export function Nav() {
       }`}
     >
       <nav className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
-        <a href="#top" className="font-semibold tracking-tight text-foreground">
+        <Link to="/" className="font-semibold tracking-tight text-foreground">
           asam<span className="text-primary">.</span>
-        </a>
+        </Link>
         <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="hover:text-foreground transition-colors"
+            <Link
+              key={l.to}
+              to={l.to}
+              className="hover:text-foreground transition-colors [&.active]:text-foreground"
+              activeProps={{ className: "active" }}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </div>
-        <a
-          href="#contact"
-          className="text-sm font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
-        >
-          Hire Me
-        </a>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link
+            to="/contact"
+            className="text-sm font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+          >
+            Hire Me
+          </Link>
+        </div>
       </nav>
     </header>
   );
