@@ -3,8 +3,13 @@ import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { PageShell } from "@/components/portfolio/PageShell";
 import { useProject } from "@/lib/projects";
+import { SITE_URL } from "@/lib/site";
 
 export const Route = createFileRoute("/projects/$slug")({
+  head: ({ params }) => ({
+    links: [{ rel: "canonical", href: `${SITE_URL}/projects/${params.slug}` }],
+    meta: [{ property: "og:url", content: `${SITE_URL}/projects/${params.slug}` }],
+  }),
   component: ProjectCaseStudy,
 });
 
