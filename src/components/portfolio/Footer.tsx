@@ -20,7 +20,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-14 grid gap-10 sm:grid-cols-2 md:grid-cols-4">
         <div className="sm:col-span-2 md:col-span-2 space-y-3">
           <Link to="/" className="font-semibold tracking-tight text-foreground">
-            asam<span className="text-primary">.</span>
+            asam hussain<span className="text-primary">.</span>
           </Link>
           <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
             Senior Full-Stack Engineer building production web apps with React, Next.js, and

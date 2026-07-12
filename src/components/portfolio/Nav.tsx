@@ -36,7 +36,7 @@ export function Nav() {
     >
       <nav className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
         <Link to="/" className="font-semibold tracking-tight text-foreground">
-          asam<span className="text-primary">.</span>
+          asam hussain<span className="text-primary">.</span>
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           {links.map((l) => (
@@ -68,7 +68,7 @@ export function Nav() {
             </button>
             <SheetContent side="right" className="w-3/4 sm:max-w-xs">
               <SheetTitle className="mb-2">
-                asam<span className="text-primary">.</span>
+                asam hussain<span className="text-primary">.</span>
               </SheetTitle>
               <div className="flex flex-col gap-1 text-base">
                 {links.map((l) => (
