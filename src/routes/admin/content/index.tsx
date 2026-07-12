@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { resizeImageToDataUrl } from "@/lib/storage";
+import { ImageCropDialog } from "@/components/admin/ImageCropDialog";
 import {
   savePortfolioSection,
   useHeroContent,
@@ -116,21 +116,16 @@ function AboutForm() {
   const remote = useAboutContent();
   const { save, saving } = useSaver("about");
   const [form, setForm] = useState<AboutContent>(remote);
-  const [uploading, setUploading] = useState(false);
+  const [cropSrc, setCropSrc] = useState<string | null>(null);
   useEffect(() => setForm(remote), [remote]);
 
-  async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
+    e.target.value = "";
     if (!file) return;
-    setUploading(true);
-    try {
-      const url = await resizeImageToDataUrl(file, 600);
-      setForm((f) => ({ ...f, photo: url }));
-    } catch {
-      toast.error("Image upload failed.");
-    } finally {
-      setUploading(false);
-    }
+    const reader = new FileReader();
+    reader.onload = () => setCropSrc(reader.result as string);
+    reader.readAsDataURL(file);
   }
 
   return (
@@ -152,7 +147,7 @@ function AboutForm() {
           {form.photo && (
             <img src={form.photo} alt="" className="h-16 w-16 rounded-full object-cover border border-border" />
           )}
-          <Input type="file" accept="image/*" onChange={handlePhotoChange} disabled={uploading} />
+          <Input type="file" accept="image/*" onChange={handlePhotoChange} />
           {form.photo && (
             <Button variant="outline" size="sm" onClick={() => setForm((f) => ({ ...f, photo: "" }))}>
               Remove
@@ -160,9 +155,19 @@ function AboutForm() {
           )}
         </div>
       </div>
-      <Button disabled={saving || uploading} onClick={() => save(form)}>
+      <Button disabled={saving} onClick={() => save(form)}>
         {saving ? "Saving…" : "Save"}
       </Button>
+      <ImageCropDialog
+        imageSrc={cropSrc}
+        aspect={1}
+        outputWidth={600}
+        onCancel={() => setCropSrc(null)}
+        onConfirm={(dataUrl) => {
+          setForm((f) => ({ ...f, photo: dataUrl }));
+          setCropSrc(null);
+        }}
+      />
     </div>
   );
 }
