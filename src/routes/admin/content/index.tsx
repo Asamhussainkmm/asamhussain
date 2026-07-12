@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { resizeImageToDataUrl } from "@/lib/storage";
 import {
   savePortfolioSection,
   useHeroContent,
@@ -115,7 +116,22 @@ function AboutForm() {
   const remote = useAboutContent();
   const { save, saving } = useSaver("about");
   const [form, setForm] = useState<AboutContent>(remote);
+  const [uploading, setUploading] = useState(false);
   useEffect(() => setForm(remote), [remote]);
+
+  async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const url = await resizeImageToDataUrl(file, 600);
+      setForm((f) => ({ ...f, photo: url }));
+    } catch {
+      toast.error("Image upload failed.");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   return (
     <div className="rounded-2xl border border-border bg-card p-6 space-y-4 mt-2">
@@ -129,8 +145,24 @@ function AboutForm() {
       </div>
       <TextField label="Rest of that sentence" value={form.currentRoleSuffix} onChange={(v) => setForm((f) => ({ ...f, currentRoleSuffix: v }))} />
       <TextField label="Closing paragraph" value={form.outro} onChange={(v) => setForm((f) => ({ ...f, outro: v }))} />
-      <Field label="Initials (avatar)" value={form.initials} onChange={(v) => setForm((f) => ({ ...f, initials: v }))} />
-      <Button disabled={saving} onClick={() => save(form)}>{saving ? "Saving…" : "Save"}</Button>
+      <Field label="Initials (fallback if no photo)" value={form.initials} onChange={(v) => setForm((f) => ({ ...f, initials: v }))} />
+      <div className="space-y-2">
+        <Label>Photo</Label>
+        <div className="flex items-center gap-4">
+          {form.photo && (
+            <img src={form.photo} alt="" className="h-16 w-16 rounded-full object-cover border border-border" />
+          )}
+          <Input type="file" accept="image/*" onChange={handlePhotoChange} disabled={uploading} />
+          {form.photo && (
+            <Button variant="outline" size="sm" onClick={() => setForm((f) => ({ ...f, photo: "" }))}>
+              Remove
+            </Button>
+          )}
+        </div>
+      </div>
+      <Button disabled={saving || uploading} onClick={() => save(form)}>
+        {saving ? "Saving…" : "Save"}
+      </Button>
     </div>
   );
 }

@@ -20,6 +20,7 @@ export interface AboutContent {
   currentRoleSuffix: string;
   outro: string;
   initials: string;
+  photo: string;
 }
 
 export interface ProjectsContent {
@@ -92,6 +93,7 @@ const emptyAbout: AboutContent = {
   currentRoleSuffix: "",
   outro: "",
   initials: "",
+  photo: "",
 };
 
 const emptyProjects: ProjectsContent = { eyebrow: "", title: "", description: "", footerNote: "" };

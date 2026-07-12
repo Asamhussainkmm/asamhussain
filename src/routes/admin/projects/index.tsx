@@ -10,7 +10,7 @@ import {
   type Project,
   type ProjectInput,
 } from "@/lib/projects";
-import { uploadProjectImage } from "@/lib/storage";
+import { resizeImageToDataUrl } from "@/lib/storage";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -74,7 +74,7 @@ function AdminProjects() {
     if (!file) return;
     setUploading(true);
     try {
-      const url = await uploadProjectImage(file);
+      const url = await resizeImageToDataUrl(file);
       setForm((f) => ({ ...f, image: url }));
     } catch {
       toast.error("Image upload failed.");

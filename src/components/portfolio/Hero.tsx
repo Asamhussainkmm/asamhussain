@@ -1,5 +1,6 @@
 import { ArrowRight, Mail } from "lucide-react";
 import { useHeroContent } from "@/lib/portfolio-content";
+import { Reveal } from "@/components/Reveal";
 
 const tokens = ["{ }", "</>", "()", "=>", "[]", "//", "0x", "λ", "&&", "??"];
 
@@ -34,40 +35,50 @@ export function Hero() {
       </div>
 
       <div className="mx-auto max-w-6xl px-6 w-full">
-        <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-3 py-1 text-xs text-muted-foreground mb-6">
-          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-          {hero.badge}
-        </div>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">
-          {hero.name}
-        </h1>
-        <p className="mt-4 text-lg md:text-2xl text-foreground/80 font-medium">
-          {hero.roleTitle}
-          {hero.stack.map((s) => (
-            <span key={s}>
-              {" "}
-              <span className="text-muted-foreground">·</span>{" "}
-              <span className="text-primary">{s}</span>
-            </span>
-          ))}
-        </p>
-        <p className="mt-6 max-w-2xl text-base md:text-lg text-muted-foreground leading-relaxed">
-          {hero.tagline}
-        </p>
-        <div className="mt-10 flex flex-wrap gap-3">
-          <a
-            href="#projects"
-            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-medium hover:opacity-90 transition-opacity"
-          >
-            View My Work <ArrowRight className="h-4 w-4" />
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-5 py-3 text-sm font-medium hover:border-primary hover:text-primary transition-colors"
-          >
-            <Mail className="h-4 w-4" /> Hire Me
-          </a>
-        </div>
+        <Reveal>
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-3 py-1 text-xs text-muted-foreground mb-6">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+            {hero.badge}
+          </div>
+        </Reveal>
+        <Reveal delay={100}>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">
+            {hero.name}
+          </h1>
+        </Reveal>
+        <Reveal delay={200}>
+          <p className="mt-4 text-lg md:text-2xl text-foreground/80 font-medium">
+            {hero.roleTitle}
+            {hero.stack.map((s) => (
+              <span key={s}>
+                {" "}
+                <span className="text-muted-foreground">·</span>{" "}
+                <span className="text-primary">{s}</span>
+              </span>
+            ))}
+          </p>
+        </Reveal>
+        <Reveal delay={300}>
+          <p className="mt-6 max-w-2xl text-base md:text-lg text-muted-foreground leading-relaxed">
+            {hero.tagline}
+          </p>
+        </Reveal>
+        <Reveal delay={400}>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-medium hover:opacity-90 transition-opacity"
+            >
+              View My Work <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-5 py-3 text-sm font-medium hover:border-primary hover:text-primary transition-colors"
+            >
+              <Mail className="h-4 w-4" /> Hire Me
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -5,6 +5,7 @@ import { SectionHeading } from "./SectionHeading";
 import { useContactContent } from "@/lib/portfolio-content";
 import { submitMessage } from "@/lib/messages";
 import { sendContactEmailCopy } from "@/lib/notify";
+import { Reveal } from "@/components/Reveal";
 
 export function Contact() {
   const [sending, setSending] = useState(false);
@@ -12,7 +13,7 @@ export function Contact() {
   return (
     <section id="contact" className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="rounded-3xl border border-border bg-surface-2 p-8 md:p-14">
+        <Reveal className="rounded-3xl border border-border bg-surface-2 p-8 md:p-14">
           <SectionHeading
             eyebrow={contact.eyebrow}
             title={contact.title}
@@ -74,7 +75,7 @@ export function Contact() {
               </button>
             </form>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
