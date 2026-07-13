@@ -13,6 +13,7 @@ import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as SkillsRouteImport } from './routes/skills'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AwardsRouteImport } from './routes/awards'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
@@ -23,6 +24,7 @@ import { Route as AdminTestimonialsIndexRouteImport } from './routes/admin/testi
 import { Route as AdminProjectsIndexRouteImport } from './routes/admin/projects/index'
 import { Route as AdminMessagesIndexRouteImport } from './routes/admin/messages/index'
 import { Route as AdminContentIndexRouteImport } from './routes/admin/content/index'
+import { Route as AdminAwardsIndexRouteImport } from './routes/admin/awards/index'
 import { Route as AdminAnalyticsIndexRouteImport } from './routes/admin/analytics/index'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -43,6 +45,11 @@ const ExperienceRoute = ExperienceRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AwardsRoute = AwardsRouteImport.update({
+  id: '/awards',
+  path: '/awards',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -95,6 +102,11 @@ const AdminContentIndexRoute = AdminContentIndexRouteImport.update({
   path: '/admin/content/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAwardsIndexRoute = AdminAwardsIndexRouteImport.update({
+  id: '/admin/awards/',
+  path: '/admin/awards/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminAnalyticsIndexRoute = AdminAnalyticsIndexRouteImport.update({
   id: '/admin/analytics/',
   path: '/admin/analytics/',
@@ -104,6 +116,7 @@ const AdminAnalyticsIndexRoute = AdminAnalyticsIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/awards': typeof AwardsRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/skills': typeof SkillsRoute
@@ -113,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/admin/analytics/': typeof AdminAnalyticsIndexRoute
+  '/admin/awards/': typeof AdminAwardsIndexRoute
   '/admin/content/': typeof AdminContentIndexRoute
   '/admin/messages/': typeof AdminMessagesIndexRoute
   '/admin/projects/': typeof AdminProjectsIndexRoute
@@ -121,6 +135,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/awards': typeof AwardsRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/skills': typeof SkillsRoute
@@ -130,6 +145,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/admin/analytics': typeof AdminAnalyticsIndexRoute
+  '/admin/awards': typeof AdminAwardsIndexRoute
   '/admin/content': typeof AdminContentIndexRoute
   '/admin/messages': typeof AdminMessagesIndexRoute
   '/admin/projects': typeof AdminProjectsIndexRoute
@@ -139,6 +155,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/awards': typeof AwardsRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/skills': typeof SkillsRoute
@@ -148,6 +165,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/admin/analytics/': typeof AdminAnalyticsIndexRoute
+  '/admin/awards/': typeof AdminAwardsIndexRoute
   '/admin/content/': typeof AdminContentIndexRoute
   '/admin/messages/': typeof AdminMessagesIndexRoute
   '/admin/projects/': typeof AdminProjectsIndexRoute
@@ -158,6 +176,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/awards'
     | '/contact'
     | '/experience'
     | '/skills'
@@ -167,6 +186,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/projects/'
     | '/admin/analytics/'
+    | '/admin/awards/'
     | '/admin/content/'
     | '/admin/messages/'
     | '/admin/projects/'
@@ -175,6 +195,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/awards'
     | '/contact'
     | '/experience'
     | '/skills'
@@ -184,6 +205,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/projects'
     | '/admin/analytics'
+    | '/admin/awards'
     | '/admin/content'
     | '/admin/messages'
     | '/admin/projects'
@@ -192,6 +214,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/awards'
     | '/contact'
     | '/experience'
     | '/skills'
@@ -201,6 +224,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/projects/'
     | '/admin/analytics/'
+    | '/admin/awards/'
     | '/admin/content/'
     | '/admin/messages/'
     | '/admin/projects/'
@@ -210,6 +234,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AwardsRoute: typeof AwardsRoute
   ContactRoute: typeof ContactRoute
   ExperienceRoute: typeof ExperienceRoute
   SkillsRoute: typeof SkillsRoute
@@ -219,6 +244,7 @@ export interface RootRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   AdminAnalyticsIndexRoute: typeof AdminAnalyticsIndexRoute
+  AdminAwardsIndexRoute: typeof AdminAwardsIndexRoute
   AdminContentIndexRoute: typeof AdminContentIndexRoute
   AdminMessagesIndexRoute: typeof AdminMessagesIndexRoute
   AdminProjectsIndexRoute: typeof AdminProjectsIndexRoute
@@ -253,6 +279,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/awards': {
+      id: '/awards'
+      path: '/awards'
+      fullPath: '/awards'
+      preLoaderRoute: typeof AwardsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -325,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminContentIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/awards/': {
+      id: '/admin/awards/'
+      path: '/admin/awards'
+      fullPath: '/admin/awards/'
+      preLoaderRoute: typeof AdminAwardsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/analytics/': {
       id: '/admin/analytics/'
       path: '/admin/analytics'
@@ -338,6 +378,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AwardsRoute: AwardsRoute,
   ContactRoute: ContactRoute,
   ExperienceRoute: ExperienceRoute,
   SkillsRoute: SkillsRoute,
@@ -347,6 +388,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   AdminAnalyticsIndexRoute: AdminAnalyticsIndexRoute,
+  AdminAwardsIndexRoute: AdminAwardsIndexRoute,
   AdminContentIndexRoute: AdminContentIndexRoute,
   AdminMessagesIndexRoute: AdminMessagesIndexRoute,
   AdminProjectsIndexRoute: AdminProjectsIndexRoute,

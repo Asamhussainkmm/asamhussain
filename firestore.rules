@@ -20,6 +20,11 @@ service cloud.firestore {
       allow write: if request.auth != null;
     }
 
+    match /awards/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
     // Contact form submissions: anyone can create one, but only the admin
     // can read the inbox or mark messages as read/delete them.
     match /messages/{document} {

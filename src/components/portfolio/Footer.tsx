@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Briefcase, Github, Linkedin, Mail, MessageCircle, Phone } from "lucide-react";
 import { useContactContent } from "@/lib/portfolio-content";
 
 const quickLinks = [
@@ -7,6 +7,7 @@ const quickLinks = [
   { to: "/projects", label: "Work" },
   { to: "/skills", label: "Skills" },
   { to: "/experience", label: "Experience" },
+  { to: "/awards", label: "Awards" },
   { to: "/testimonials", label: "Testimonials" },
   { to: "/contact", label: "Contact" },
 ];
@@ -58,6 +59,28 @@ export function Footer() {
                 </a>
               </li>
             )}
+            {contact.phone && (
+              <li>
+                <a
+                  href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Phone className="h-3.5 w-3.5" /> {contact.phone}
+                </a>
+              </li>
+            )}
+            {contact.whatsappUrl && contact.whatsappUrl !== "#" && (
+              <li>
+                <a
+                  href={contact.whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <MessageCircle className="h-3.5 w-3.5" /> WhatsApp
+                </a>
+              </li>
+            )}
             {contact.linkedinUrl && contact.linkedinUrl !== "#" && (
               <li>
                 <a
@@ -79,6 +102,18 @@ export function Footer() {
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Github className="h-3.5 w-3.5" /> GitHub
+                </a>
+              </li>
+            )}
+            {contact.upworkUrl && contact.upworkUrl !== "#" && (
+              <li>
+                <a
+                  href={contact.upworkUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Briefcase className="h-3.5 w-3.5" /> Upwork
                 </a>
               </li>
             )}

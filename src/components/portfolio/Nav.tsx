@@ -14,6 +14,7 @@ const links = [
   { to: "/projects", label: "Work" },
   { to: "/skills", label: "Skills" },
   { to: "/experience", label: "Experience" },
+  { to: "/awards", label: "Awards" },
   { to: "/contact", label: "Contact" },
 ];
 

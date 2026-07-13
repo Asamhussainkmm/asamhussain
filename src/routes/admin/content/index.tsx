@@ -18,6 +18,7 @@ import {
   useContactContent,
   useProjectsContent,
   useTestimonialsContent,
+  useAwardsContent,
   type HeroContent,
   type AboutContent,
   type SkillsContent,
@@ -25,6 +26,7 @@ import {
   type ContactContent,
   type ProjectsContent,
   type TestimonialsContent,
+  type AwardsContent,
   type SkillGroup,
   type ExperienceEntry,
   type TestimonialBadge,
@@ -67,6 +69,7 @@ function AdminContent() {
             <TabsTrigger value="projects">Projects section</TabsTrigger>
             <TabsTrigger value="skills">Skills</TabsTrigger>
             <TabsTrigger value="experience">Experience</TabsTrigger>
+            <TabsTrigger value="awards">Awards section</TabsTrigger>
             <TabsTrigger value="testimonials">Testimonials section</TabsTrigger>
             <TabsTrigger value="contact">Contact</TabsTrigger>
           </TabsList>
@@ -76,6 +79,7 @@ function AdminContent() {
         <TabsContent value="projects"><ProjectsSectionForm /></TabsContent>
         <TabsContent value="skills"><SkillsForm /></TabsContent>
         <TabsContent value="experience"><ExperienceForm /></TabsContent>
+        <TabsContent value="awards"><AwardsSectionForm /></TabsContent>
         <TabsContent value="testimonials"><TestimonialsSectionForm /></TabsContent>
         <TabsContent value="contact"><ContactForm /></TabsContent>
       </Tabs>
@@ -287,6 +291,28 @@ function ProjectsSectionForm() {
   );
 }
 
+function AwardsSectionForm() {
+  const remote = useAwardsContent();
+  const { save, saving } = useSaver("awards");
+  const [form, setForm] = useState<AwardsContent>(remote);
+  useEffect(() => setForm(remote), [remote]);
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6 space-y-4 mt-2">
+      <p className="text-xs text-muted-foreground">
+        This is the section heading only — add/edit individual awards on the Awards page. The
+        section is hidden on the site until you add at least one award.
+      </p>
+      <Field label="Eyebrow" value={form.eyebrow} onChange={(v) => setForm((f) => ({ ...f, eyebrow: v }))} />
+      <Field label="Title" value={form.title} onChange={(v) => setForm((f) => ({ ...f, title: v }))} />
+      <TextField label="Description" value={form.description} onChange={(v) => setForm((f) => ({ ...f, description: v }))} />
+      <Button disabled={saving} onClick={() => save(form)}>
+        {saving ? "Saving…" : "Save"}
+      </Button>
+    </div>
+  );
+}
+
 function TestimonialsSectionForm() {
   const remote = useTestimonialsContent();
   const { save, saving } = useSaver("testimonials");
@@ -340,11 +366,16 @@ function ContactForm() {
       <Field label="Eyebrow" value={form.eyebrow} onChange={(v) => setForm((f) => ({ ...f, eyebrow: v }))} />
       <Field label="Title" value={form.title} onChange={(v) => setForm((f) => ({ ...f, title: v }))} />
       <TextField label="Description" value={form.description} onChange={(v) => setForm((f) => ({ ...f, description: v }))} />
-      <div className="grid sm:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Email" value={form.email} onChange={(v) => setForm((f) => ({ ...f, email: v }))} />
+        <Field label="Phone" value={form.phone} onChange={(v) => setForm((f) => ({ ...f, phone: v }))} />
+      </div>
+      <div className="grid sm:grid-cols-3 gap-4">
+        <Field label="WhatsApp URL (wa.me/...)" value={form.whatsappUrl} onChange={(v) => setForm((f) => ({ ...f, whatsappUrl: v }))} />
         <Field label="LinkedIn URL" value={form.linkedinUrl} onChange={(v) => setForm((f) => ({ ...f, linkedinUrl: v }))} />
         <Field label="GitHub URL" value={form.githubUrl} onChange={(v) => setForm((f) => ({ ...f, githubUrl: v }))} />
       </div>
+      <Field label="Upwork URL" value={form.upworkUrl} onChange={(v) => setForm((f) => ({ ...f, upworkUrl: v }))} />
       <Field label="Note" value={form.note} onChange={(v) => setForm((f) => ({ ...f, note: v }))} />
       <Button disabled={saving} onClick={() => save(form)}>{saving ? "Saving…" : "Save"}</Button>
     </div>

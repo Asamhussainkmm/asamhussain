@@ -3,14 +3,16 @@ import { useIsFetching } from "@tanstack/react-query";
 
 /**
  * True once the page's initial Firestore fetches (portfolio content,
- * projects, testimonials) have settled at least once. Used to gate a loading
- * screen so visitors don't see a flash of empty content before data arrives.
+ * projects, testimonials, awards) have settled at least once. Used to gate a
+ * loading screen so visitors don't see a flash of empty content before data
+ * arrives.
  */
 export function useInitialLoad(): boolean {
   const fetching =
     useIsFetching({ queryKey: ["portfolio"] }) +
     useIsFetching({ queryKey: ["projects"] }) +
-    useIsFetching({ queryKey: ["testimonials"] });
+    useIsFetching({ queryKey: ["testimonials"] }) +
+    useIsFetching({ queryKey: ["awards"] });
   const hasFetched = useRef(false);
   const [ready, setReady] = useState(false);
 

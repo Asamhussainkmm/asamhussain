@@ -5,6 +5,7 @@ import { useAuthUser, signOutUser } from "@/lib/auth";
 const navItems = [
   { to: "/admin", label: "Dashboard" },
   { to: "/admin/projects", label: "Projects" },
+  { to: "/admin/awards", label: "Awards" },
   { to: "/admin/testimonials", label: "Testimonials" },
   { to: "/admin/messages", label: "Messages" },
   { to: "/admin/content", label: "Content" },

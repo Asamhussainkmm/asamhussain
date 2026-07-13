@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Github, Linkedin, Mail, Send } from "lucide-react";
+import { Briefcase, Github, Linkedin, Mail, MessageCircle, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { SectionHeading } from "./SectionHeading";
 import { useContactContent } from "@/lib/portfolio-content";
@@ -21,20 +21,69 @@ export function Contact() {
           />
           <div className="grid md:grid-cols-[1fr_1.2fr] gap-10">
             <div className="space-y-6">
-              <a
-                href={`mailto:${contact.email}`}
-                className="flex items-center gap-3 text-foreground/85 hover:text-primary transition-colors"
-              >
-                <Mail className="h-5 w-5 text-primary" />
-                {contact.email}
-              </a>
+              {contact.email && (
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="flex items-center gap-3 text-foreground/85 hover:text-primary transition-colors"
+                >
+                  <Mail className="h-5 w-5 text-primary" />
+                  {contact.email}
+                </a>
+              )}
+              {contact.phone && (
+                <a
+                  href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}
+                  className="flex items-center gap-3 text-foreground/85 hover:text-primary transition-colors"
+                >
+                  <Phone className="h-5 w-5 text-primary" />
+                  {contact.phone}
+                </a>
+              )}
               <div className="flex gap-3">
-                <a href={contact.linkedinUrl} aria-label="LinkedIn" className="h-11 w-11 grid place-items-center rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors">
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a href={contact.githubUrl} aria-label="GitHub" className="h-11 w-11 grid place-items-center rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors">
-                  <Github className="h-5 w-5" />
-                </a>
+                {contact.whatsappUrl && contact.whatsappUrl !== "#" && (
+                  <a
+                    href={contact.whatsappUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="WhatsApp"
+                    className="h-11 w-11 grid place-items-center rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                  </a>
+                )}
+                {contact.linkedinUrl && contact.linkedinUrl !== "#" && (
+                  <a
+                    href={contact.linkedinUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    className="h-11 w-11 grid place-items-center rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors"
+                  >
+                    <Linkedin className="h-5 w-5" />
+                  </a>
+                )}
+                {contact.githubUrl && contact.githubUrl !== "#" && (
+                  <a
+                    href={contact.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="GitHub"
+                    className="h-11 w-11 grid place-items-center rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors"
+                  >
+                    <Github className="h-5 w-5" />
+                  </a>
+                )}
+                {contact.upworkUrl && contact.upworkUrl !== "#" && (
+                  <a
+                    href={contact.upworkUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Upwork"
+                    className="h-11 w-11 grid place-items-center rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors"
+                  >
+                    <Briefcase className="h-5 w-5" />
+                  </a>
+                )}
               </div>
               <p className="text-sm text-muted-foreground max-w-xs">
                 {contact.note}

@@ -72,9 +72,18 @@ export interface ContactContent {
   title: string;
   description: string;
   email: string;
+  phone: string;
+  whatsappUrl: string;
   linkedinUrl: string;
   githubUrl: string;
+  upworkUrl: string;
   note: string;
+}
+
+export interface AwardsContent {
+  eyebrow: string;
+  title: string;
+  description: string;
 }
 
 // Empty shapes only — no copy lives in the codebase. All real content lives
@@ -109,10 +118,15 @@ const emptyContact: ContactContent = {
   title: "",
   description: "",
   email: "",
+  phone: "",
+  whatsappUrl: "",
   linkedinUrl: "",
   githubUrl: "",
+  upworkUrl: "",
   note: "",
 };
+
+const emptyAwards: AwardsContent = { eyebrow: "", title: "", description: "" };
 
 /**
  * Fetches a `portfolio/{id}` Firestore document and shallow-merges it over
@@ -151,6 +165,7 @@ export const useExperienceContent = () => usePortfolioSection("experience", empt
 export const useTestimonialsContent = () =>
   usePortfolioSection("testimonials", emptyTestimonials);
 export const useContactContent = () => usePortfolioSection("contact", emptyContact);
+export const useAwardsContent = () => usePortfolioSection("awards", emptyAwards);
 
 export async function savePortfolioSection<T extends object>(id: string, data: T): Promise<void> {
   await setDoc(doc(db, "portfolio", id), data, { merge: true });
