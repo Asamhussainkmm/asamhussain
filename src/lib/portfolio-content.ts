@@ -1,5 +1,5 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { db } from "./firebase";
 
 export interface HeroContent {
@@ -142,9 +142,9 @@ async function fetchSection<T extends object>(id: string, fallback: T): Promise<
   }
 }
 
-function usePortfolioSection<T extends object>(id: string, fallback: T): T {
-  const { data } = useQuery({
-    queryKey: ["portfolio", id],
+function portfolioSectionQueryOptions<T extends object>(id: string, fallback: T) {
+  return {
+    queryKey: ["portfolio", id] as const,
     queryFn: () => fetchSection(id, fallback),
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
@@ -153,7 +153,11 @@ function usePortfolioSection<T extends object>(id: string, fallback: T): T {
     // the full staleTime window and never actually fetches from Firestore on
     // a new page load — marking it as of "time zero" forces one real fetch.
     initialDataUpdatedAt: 0,
-  });
+  };
+}
+
+function usePortfolioSection<T extends object>(id: string, fallback: T): T {
+  const { data } = useQuery(portfolioSectionQueryOptions(id, fallback));
   return data;
 }
 
@@ -169,4 +173,28 @@ export const useAwardsContent = () => usePortfolioSection("awards", emptyAwards)
 
 export async function savePortfolioSection<T extends object>(id: string, data: T): Promise<void> {
   await setDoc(doc(db, "portfolio", id), data, { merge: true });
+}
+
+/**
+ * True once every portfolio section's real Firestore data has arrived at
+ * least once (`dataUpdatedAt > 0` — initialData is stamped at time zero, see
+ * above). Unlike tracking "is anything fetching", this can't be fooled by an
+ * unrelated section (e.g. the footer's contact fetch) finishing first, and
+ * can't get stuck forever when a section is already cached from an earlier
+ * page — it just reads true immediately in that case.
+ */
+export function usePortfolioReady(): boolean {
+  const results = useQueries({
+    queries: [
+      portfolioSectionQueryOptions("hero", emptyHero),
+      portfolioSectionQueryOptions("about", emptyAbout),
+      portfolioSectionQueryOptions("projects", emptyProjects),
+      portfolioSectionQueryOptions("skills", emptySkills),
+      portfolioSectionQueryOptions("experience", emptyExperience),
+      portfolioSectionQueryOptions("awards", emptyAwards),
+      portfolioSectionQueryOptions("testimonials", emptyTestimonials),
+      portfolioSectionQueryOptions("contact", emptyContact),
+    ],
+  });
+  return results.every((r) => r.dataUpdatedAt > 0);
 }

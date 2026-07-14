@@ -10,7 +10,7 @@ import { Contact } from "@/components/portfolio/Contact";
 import { PageShell } from "@/components/portfolio/PageShell";
 import { PageLoader } from "@/components/portfolio/PageLoader";
 import { SITE_URL } from "@/lib/site";
-import { useInitialLoad } from "@/lib/useInitialLoad";
+import { usePortfolioReady } from "@/lib/portfolio-content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const ready = useInitialLoad();
+  const ready = usePortfolioReady();
   return (
     <PageShell>
       {ready ? (
