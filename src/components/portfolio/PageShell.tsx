@@ -3,6 +3,7 @@ import { useRouterState } from "@tanstack/react-router";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { CrispChat } from "@/components/CrispChat";
 import { logPageView } from "@/lib/analytics";
 
 export function PageShell({ children }: { children: ReactNode }) {
@@ -18,6 +19,7 @@ export function PageShell({ children }: { children: ReactNode }) {
       <main>{children}</main>
       <Footer />
       <Toaster />
+      <CrispChat />
     </div>
   );
 }
