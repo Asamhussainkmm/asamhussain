@@ -355,11 +355,28 @@ function TestimonialsSectionForm() {
   );
 }
 
+const MAX_CV_BYTES = 700 * 1024;
+
 function ContactForm() {
   const remote = useContactContent();
   const { save, saving } = useSaver("contact");
   const [form, setForm] = useState<ContactContent>(remote);
   useEffect(() => setForm(remote), [remote]);
+
+  function handleCvChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.size > MAX_CV_BYTES) {
+      toast.error("CV file is too large (max ~700KB) — try compressing the PDF.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setForm((f) => ({ ...f, cvUrl: reader.result as string, cvFileName: file.name }));
+    };
+    reader.readAsDataURL(file);
+  }
 
   return (
     <div className="rounded-2xl border border-border bg-card p-6 space-y-4 mt-2">
@@ -377,6 +394,31 @@ function ContactForm() {
       </div>
       <Field label="Upwork URL" value={form.upworkUrl} onChange={(v) => setForm((f) => ({ ...f, upworkUrl: v }))} />
       <Field label="Note" value={form.note} onChange={(v) => setForm((f) => ({ ...f, note: v }))} />
+      <div className="space-y-2">
+        <Label>CV / Resume (PDF)</Label>
+        <div className="flex flex-wrap items-center gap-4">
+          {form.cvUrl && (
+            <a
+              href={form.cvUrl}
+              download={form.cvFileName || "CV.pdf"}
+              className="text-sm text-primary hover:underline underline-offset-4"
+            >
+              {form.cvFileName || "Current CV"}
+            </a>
+          )}
+          <Input type="file" accept="application/pdf" onChange={handleCvChange} className="max-w-xs" />
+          {form.cvUrl && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setForm((f) => ({ ...f, cvUrl: "", cvFileName: "" }))}
+            >
+              Remove
+            </Button>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">PDF only, ~700KB max.</p>
+      </div>
       <Button disabled={saving} onClick={() => save(form)}>{saving ? "Saving…" : "Save"}</Button>
     </div>
   );

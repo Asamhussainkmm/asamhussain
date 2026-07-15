@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Briefcase, Github, Linkedin, Mail, MessageCircle, Phone, Send } from "lucide-react";
+import { Briefcase, Download, Github, Linkedin, Mail, MessageCircle, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { SectionHeading } from "./SectionHeading";
 import { useContactContent } from "@/lib/portfolio-content";
@@ -85,6 +85,15 @@ export function Contact() {
                   </a>
                 )}
               </div>
+              {contact.cvUrl && (
+                <a
+                  href={contact.cvUrl}
+                  download={contact.cvFileName || "CV.pdf"}
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-sm font-medium hover:border-primary hover:text-primary transition-colors"
+                >
+                  <Download className="h-4 w-4" /> Download CV
+                </a>
+              )}
               <p className="text-sm text-muted-foreground max-w-xs">
                 {contact.note}
               </p>

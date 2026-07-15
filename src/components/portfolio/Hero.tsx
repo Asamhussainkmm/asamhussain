@@ -1,11 +1,12 @@
-import { ArrowRight, Mail } from "lucide-react";
-import { useHeroContent } from "@/lib/portfolio-content";
+import { ArrowRight, Download, Mail } from "lucide-react";
+import { useHeroContent, useContactContent } from "@/lib/portfolio-content";
 import { Reveal } from "@/components/Reveal";
 
 const tokens = ["{ }", "</>", "()", "=>", "[]", "//", "0x", "λ", "&&", "??"];
 
 export function Hero() {
   const hero = useHeroContent();
+  const contact = useContactContent();
   return (
     <section
       id="top"
@@ -77,6 +78,15 @@ export function Hero() {
             >
               <Mail className="h-4 w-4" /> Hire Me
             </a>
+            {contact.cvUrl && (
+              <a
+                href={contact.cvUrl}
+                download={contact.cvFileName || "CV.pdf"}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-5 py-3 text-sm font-medium hover:border-primary hover:text-primary transition-colors"
+              >
+                <Download className="h-4 w-4" /> Download CV
+              </a>
+            )}
           </div>
         </Reveal>
       </div>

@@ -78,6 +78,8 @@ export interface ContactContent {
   githubUrl: string;
   upworkUrl: string;
   note: string;
+  cvUrl: string;
+  cvFileName: string;
 }
 
 export interface AwardsContent {
@@ -124,6 +126,8 @@ const emptyContact: ContactContent = {
   githubUrl: "",
   upworkUrl: "",
   note: "",
+  cvUrl: "",
+  cvFileName: "",
 };
 
 const emptyAwards: AwardsContent = { eyebrow: "", title: "", description: "" };
